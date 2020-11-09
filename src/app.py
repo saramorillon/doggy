@@ -1,8 +1,8 @@
-from flask import Flask
+from flask import Flask, render_template, request
 
-def create_app():
-    app = Flask(__name__)
+app = Flask(__name__)
 
 
-if __name__ == '__main__':
-    create_app
+@app.route('/login/<username>')
+def test_template(username: str):
+    return render_template('login.html', username=username)
