@@ -13,6 +13,7 @@ MarkupSafe = "*"
 SQLAlchemy = "*"
 Werkzeug = "*"
 python-dotenv = "*"
+flask-session = "*"
 
 [dev-packages]
 pylint = "*"
