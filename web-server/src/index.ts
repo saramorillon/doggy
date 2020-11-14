@@ -9,12 +9,15 @@ import passport from 'passport'
 import { Strategy } from 'passport-local'
 import path from 'path'
 import serve from 'serve-static'
+import fileStore from 'session-file-store'
 import { createConnection } from 'typeorm'
 import { config } from './config'
 import { logger } from './libs/logger'
 import { deserializeUser, localStrategy, serializeUser } from './libs/passport'
 import { accessLogger } from './middlewares/accessLogger'
 import { router } from './router'
+
+const FileStore = fileStore(session)
 
 passport.serializeUser(serializeUser)
 passport.deserializeUser(deserializeUser)
@@ -28,7 +31,7 @@ createConnection().then(() => {
   app.use(serve(path.join(__dirname, 'public')))
   app.use(cookieParser())
   app.use(bodyParser.urlencoded({ extended: true }))
-  app.use(session({ secret: config.keys, resave: true, saveUninitialized: true }))
+  app.use(session({ secret: config.keys, resave: true, saveUninitialized: true, store: new FileStore() }))
   app.use(flash())
   app.use(passport.initialize())
   app.use(passport.session())
