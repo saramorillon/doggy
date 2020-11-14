@@ -1,5 +1,16 @@
 import React from 'react'
+import { IContainer } from '../models/IContainer'
 
-export default function Home(): JSX.Element {
-  return <div>Home</div>
+function Container({ container }: { container: IContainer }) {
+  return <>{container.name}</>
+}
+
+export default function Home({ containers }: { containers: IContainer[] }): JSX.Element {
+  return (
+    <>
+      {containers.map((container) => (
+        <Container key={container.id} container={container} />
+      ))}
+    </>
+  )
 }
